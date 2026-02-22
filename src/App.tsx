@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
   Box, AlertTriangle, Package,
   ArrowUpRight, ArrowDownRight, DollarSign,
-  Briefcase, Download, Calendar, Settings,
-  X, Upload, Save, Trash2, Plus
+  Briefcase, Download, Settings,
+  X, Upload, Save, Trash2
 } from 'lucide-react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -12,7 +12,8 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { saveToStorage, loadFromStorage, parseExcel, DashboardData } from './utils/dataUtils';
+import { saveToStorage, loadFromStorage, parseExcel } from './utils/dataUtils';
+import type { DashboardData } from './utils/dataUtils';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -91,7 +92,6 @@ export default function App() {
   });
 
   const [isManagePanelOpen, setIsManagePanelOpen] = useState(false);
-  const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
     const savedData = loadFromStorage();
