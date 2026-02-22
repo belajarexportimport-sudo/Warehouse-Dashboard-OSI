@@ -12,7 +12,11 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { saveToStorage, loadFromStorage, parseExcel } from './utils/dataUtils';
+import {
+  saveToStorage, loadFromStorage, parseExcel,
+  mapStatsData, mapGPData, mapInventoryStatusData,
+  mapProductData, mapCategoryData, mapTrendData
+} from './utils/dataUtils';
 import type { DashboardData } from './utils/dataUtils';
 
 function cn(...inputs: ClassValue[]) {
@@ -113,12 +117,12 @@ export default function App() {
         const sheets = await parseExcel(file);
         const newData = { ...data };
 
-        if (sheets['Stats']) newData.stats = sheets['Stats'];
-        if (sheets['GP']) newData.gpAnalysis = sheets['GP'];
-        if (sheets['Inventory']) newData.inventoryStatus = sheets['Inventory'];
-        if (sheets['Products']) newData.topProducts = sheets['Products'];
-        if (sheets['Category']) newData.categoryPerformance = sheets['Category'];
-        if (sheets['Sales']) newData.salesTrend = sheets['Sales'];
+        if (sheets['Stats']) newData.stats = mapStatsData(sheets['Stats']);
+        if (sheets['GP']) newData.gpAnalysis = mapGPData(sheets['GP']);
+        if (sheets['Inventory']) newData.inventoryStatus = mapInventoryStatusData(sheets['Inventory']);
+        if (sheets['Products']) newData.topProducts = mapProductData(sheets['Products']);
+        if (sheets['Category']) newData.categoryPerformance = mapCategoryData(sheets['Category']);
+        if (sheets['Sales']) newData.salesTrend = mapTrendData(sheets['Sales']);
 
         handleSaveData(newData);
       } catch (err) {

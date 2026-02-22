@@ -44,6 +44,54 @@ export const parseExcel = (file: File): Promise<{ [sheetName: string]: any[] }> 
     });
 };
 
+export const mapStatsData = (rows: any[]) => {
+    return rows.map(row => ({
+        label: row.label || row.Label || row.Keterangan || 'Unknown',
+        value: row.value || row.Value || row.Jumlah || '0',
+        trend: row.trend || row.Trend || '+0',
+        trendUp: row.trendUp !== undefined ? row.trendUp : (row.TrendUp === 'true' || row.TrendUp === true)
+    }));
+};
+
+export const mapGPData = (rows: any[]) => {
+    return rows.map(row => ({
+        label: row.label || row.Label || row.Keterangan || 'Metric',
+        value: row.value || row.Value || row.Jumlah || '0'
+    }));
+};
+
+export const mapInventoryStatusData = (rows: any[]) => {
+    return rows.map(row => ({
+        name: row.name || row.Name || row.Status || 'Unknown',
+        value: parseInt(row.value || row.Value || row.Jumlah) || 0,
+        color: row.color || row.Color || '#6366f1'
+    }));
+};
+
+export const mapProductData = (rows: any[]) => {
+    return rows.map(row => ({
+        name: row.name || row.Name || row.Nama || row['Nama Barang'] || 'Product',
+        sku: row.sku || row.SKU || row['Kode Barang'] || 'N/A',
+        sold: parseInt(row.sold || row.Sold || row.Terjual) || 0,
+        revenue: row.revenue || row.Revenue || row.Pendapatan || '0'
+    }));
+};
+
+export const mapCategoryData = (rows: any[]) => {
+    return rows.map(row => ({
+        category: row.category || row.Category || row.Kategori || 'Other',
+        qty: parseInt(row.qty || row.Qty || row.Jumlah) || 0,
+        revenue: parseInt(row.revenue || row.Revenue || row.Pendapatan) || 0
+    }));
+};
+
+export const mapTrendData = (rows: any[]) => {
+    return rows.map(row => ({
+        month: row.month || row.Month || row.Bulan || 'Jan',
+        sales: parseInt(row.sales || row.Sales || row.Penjualan) || 0
+    }));
+};
+
 export const parseCSV = (csvContent: string) => {
     const lines = csvContent.split('\n');
     const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
